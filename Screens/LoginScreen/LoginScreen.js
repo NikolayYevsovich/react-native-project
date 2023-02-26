@@ -12,7 +12,7 @@ import {
 import styles from "./LoginScreen.styles";
 import { StatusBar } from "expo-status-bar";
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const [isShownKeybord, setIsShownKeybord] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,12 +58,21 @@ export default function LoginScreen() {
               value={password}
             />
             <TouchableOpacity
-              style={{ ...styles.btn, marginBottom: isShownKeybord ? 32 : 112 }}
+              style={styles.btn}
               activeOpacity={0.8}
               onPress={onFormSubmit}
             >
               <Text style={styles.btnTitle}>Login</Text>
             </TouchableOpacity>
+            <Text
+              style={{
+                ...styles.navLink,
+                marginBottom: isShownKeybord ? 32 : 112,
+              }}
+              onPress={() => navigation.navigate("Register")}
+            >
+              New to application? Sign Up
+            </Text>
           </View>
         </ImageBackground>
       </TouchableWithoutFeedback>

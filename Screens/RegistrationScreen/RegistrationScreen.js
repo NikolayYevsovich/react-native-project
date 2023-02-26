@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  Button,
 } from "react-native";
 import styles from "./RegistrationScreen.styles";
 import { StatusBar } from "expo-status-bar";
+import { useRaut } from "../../router";
 
-export default function RegistrationScreen() {
+export default function RegistrationScreen({ navigation }) {
   const [isShownKeybord, setIsShownKeybord] = useState(false);
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
@@ -67,12 +69,21 @@ export default function RegistrationScreen() {
               value={password}
             />
             <TouchableOpacity
-              style={{ ...styles.btn, marginBottom: isShownKeybord ? 32 : 112 }}
+              style={styles.btn}
               activeOpacity={0.8}
               onPress={onFormSubmit}
             >
               <Text style={styles.btnTitle}>Registration</Text>
             </TouchableOpacity>
+            <Text
+              style={{
+                ...styles.navLink,
+                marginBottom: isShownKeybord ? 32 : 112,
+              }}
+              onPress={() => navigation.navigate("Login")}
+            >
+              Already have an account? Sign In
+            </Text>
           </View>
         </ImageBackground>
       </TouchableWithoutFeedback>

@@ -47,4 +47,10 @@ export default styles = StyleSheet.create({
     marginBottom: 33,
     marginTop: 32,
   },
+  navLink: {
+    color: "#1B4371",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 20,
+  },
 });
