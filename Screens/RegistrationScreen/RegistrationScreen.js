@@ -7,11 +7,10 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
-  Button,
 } from "react-native";
 import styles from "./RegistrationScreen.styles";
 import { StatusBar } from "expo-status-bar";
-import { useRaut } from "../../router";
+// import { useRaut } from "../../router";
 
 export default function RegistrationScreen({ navigation }) {
   const [isShownKeybord, setIsShownKeybord] = useState(false);
