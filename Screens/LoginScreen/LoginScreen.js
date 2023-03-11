@@ -28,7 +28,6 @@ export default function LoginScreen({ navigation }) {
   const onFormSubmit = () => {
     keyboardHide();
     if (email && password) {
-      // console.log({ email, password });
       dispatch(authSignInUser({ email, password }));
       setEmail("");
       setPassword("");

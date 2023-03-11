@@ -7,12 +7,6 @@ import { useState } from "react";
 import Main from "./components/Main";
 
 export default function App() {
-  // const [user, setUser] = useState(null);
-
-  // firebase.auth().onAuthStateChanged((user) => setUser(user));
-
-  // const routing = useRaut(user);
-
   return (
     <Provider store={store}>
       <Main />

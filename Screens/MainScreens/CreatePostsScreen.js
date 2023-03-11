@@ -45,7 +45,7 @@ const CreatePostsScreen = ({ navigation }) => {
       const photo = await camera.takePictureAsync();
       setPhoto(photo.uri);
     } catch (error) {
-      console.log("Error taking photo:", error);
+      console.log("Error taking photo:", error.message);
     }
   };
 
