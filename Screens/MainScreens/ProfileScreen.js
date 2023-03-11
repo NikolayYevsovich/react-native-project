@@ -72,7 +72,7 @@ const ProfileScreen = () => {
                       }}
                       color="black"
                     />
-                    <Text>WTF</Text>
+                    <Text>{item.locationName}</Text>
                   </View>
                 </View>
               </View>
@@ -97,8 +97,6 @@ const styles = StyleSheet.create({
   },
   postsContainer: {
     backgroundColor: "#fff",
-    // paddingLeft: 25,
-    // paddingRight: 25,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     position: "relative",
