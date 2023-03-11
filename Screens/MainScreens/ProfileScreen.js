@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     position: "relative",
+    flex: 1,
   },
   postImage: {
     width: 343,
