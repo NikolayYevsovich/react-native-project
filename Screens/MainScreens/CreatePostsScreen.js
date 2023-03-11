@@ -7,17 +7,21 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import { firebase } from "../../firebase/config";
 import { Camera } from "expo-camera";
 import { FontAwesome } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import * as Location from "expo-location";
+import { useSelector } from "react-redux";
 
 const CreatePostsScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
-  const [photoName, setPhotoName] = useState("");
+  const [comment, setcomment] = useState("");
   const [locationName, setLocationName] = useState("");
   const [location, setLocation] = useState(null);
+
+  const { userId, nickname } = useSelector((state) => state.auth);
 
   useEffect(() => {
     (async () => {
@@ -45,19 +49,48 @@ const CreatePostsScreen = ({ navigation }) => {
     }
   };
 
-  const sendPhoto = () => {
-    if ((photo, photoName, location, locationName)) {
-      navigation.navigate("DefaultScreen", {
-        photo,
-        photoName,
-        location: location?.coords,
-        locationName,
-      });
-      setPhoto("");
-      setPhotoName("");
-      setLocationName("");
-      setLocation(null);
-    }
+  const uploadPostToServer = async () => {
+    const photo = await uploadPhotoToServer();
+    const post = {
+      photo,
+      comment,
+      location: location.coords,
+      locationName,
+      userId,
+      nickname,
+    };
+    console.log("post object:", post);
+    const createPost = await firebase.firestore().collection("posts").add(post);
+    console.log("post created:", createPost);
+  };
+
+  const uploadPhotoToServer = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+    const uniquePostId = Date.now().toString();
+
+    const data = await firebase
+      .storage()
+      .ref(`postImage/${uniquePostId}`)
+      .put(file);
+
+    const processedPhoto = await firebase
+      .storage()
+      .ref("postImage")
+      .child(uniquePostId)
+      .getDownloadURL();
+    return processedPhoto;
+  };
+
+  const sendPhoto = async () => {
+    await uploadPostToServer();
+
+    navigation.navigate("DefaultScreen");
+
+    setPhoto("");
+    setcomment("");
+    setLocationName("");
+    setLocation(null);
   };
   return (
     <View style={styles.container}>
@@ -82,8 +115,8 @@ const CreatePostsScreen = ({ navigation }) => {
       <TextInput
         placeholder="Description..."
         style={styles.input}
-        value={photoName}
-        onChangeText={(value) => setPhotoName(value)}
+        value={comment}
+        onChangeText={(value) => setcomment(value)}
       />
       <View>
         <TextInput
@@ -111,6 +144,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#fff",
   },
   camera: {
     width: 343,
@@ -137,6 +171,7 @@ const styles = StyleSheet.create({
     height: 240,
     width: 343,
     zIndex: 1,
+    objectFit: "contain",
   },
   postBtn: {
     width: 343,

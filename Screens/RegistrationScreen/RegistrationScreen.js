@@ -8,6 +8,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { authSignUpUser } from "../../redux/auth/authOperations";
 import styles from "./RegistrationScreen.styles";
 import { StatusBar } from "expo-status-bar";
 // import { useRaut } from "../../router";
@@ -18,6 +20,8 @@ export default function RegistrationScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+
   const keyboardHide = () => {
     setIsShownKeybord(false);
     Keyboard.dismiss();
@@ -25,7 +29,8 @@ export default function RegistrationScreen({ navigation }) {
   const onFormSubmit = () => {
     keyboardHide();
     if (login && email && password) {
-      console.log({ login, email, password });
+      // console.log({ login, email, password });
+      dispatch(authSignUpUser({ login, email, password }));
       setLogin("");
       setEmail("");
       setPassword("");

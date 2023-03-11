@@ -9,6 +9,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { authSignInUser } from "../../redux/auth/authOperations";
 import styles from "./LoginScreen.styles";
 import { StatusBar } from "expo-status-bar";
 
@@ -17,6 +19,8 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+
   const keyboardHide = () => {
     setIsShownKeybord(false);
     Keyboard.dismiss();
@@ -24,7 +28,8 @@ export default function LoginScreen({ navigation }) {
   const onFormSubmit = () => {
     keyboardHide();
     if (email && password) {
-      console.log({ email, password });
+      // console.log({ email, password });
+      dispatch(authSignInUser({ email, password }));
       setEmail("");
       setPassword("");
     }

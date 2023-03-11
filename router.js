@@ -51,7 +51,6 @@ export const useRaut = (isAuth) => {
         name="Create"
         component={CreatePostsScreen}
         options={{
-          headerShown: false,
           tabBarIcon: ({ focused, size, color }) => (
             <AntDesign
               name="plus"
@@ -59,13 +58,13 @@ export const useRaut = (isAuth) => {
               color={focused ? "#FF6C00" : color}
             />
           ),
+          headerTitleAlign: "center",
         }}
       />
       <MainTab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          headerShown: false,
           tabBarIcon: ({ focused, size, color }) => (
             <FontAwesome5
               name="user"
@@ -73,6 +72,7 @@ export const useRaut = (isAuth) => {
               color={focused ? "#FF6C00" : color}
             />
           ),
+          headerTitleAlign: "center",
         }}
       />
     </MainTab.Navigator>
