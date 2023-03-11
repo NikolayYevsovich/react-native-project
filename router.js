@@ -73,6 +73,7 @@ export const useRaut = (isAuth) => {
             />
           ),
           headerTitleAlign: "center",
+          headerShown: false,
         }}
       />
     </MainTab.Navigator>

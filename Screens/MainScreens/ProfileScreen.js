@@ -14,11 +14,12 @@ import { authSignOutUser } from "../../redux/auth/authOperations";
 import { StatusBar } from "expo-status-bar";
 // icons
 import { EvilIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
   const [userPosts, setUserPosts] = useState([]);
-  const { userId } = useSelector((state) => state.auth);
+  const { userId, nickname } = useSelector((state) => state.auth);
 
   useEffect(() => {
     getUserPosts();
@@ -42,8 +43,16 @@ const ProfileScreen = () => {
         source={require("../../assets/images/screen-bg.png")}
         style={styles.imege}
       >
-        <Button title="Sign out" onPress={sighOut} />
-        <View>
+        <View style={styles.postsContainer}>
+          <Text style={styles.userNickname}>{nickname}</Text>
+          <AntDesign
+            name="logout"
+            size={24}
+            color="black"
+            onPress={sighOut}
+            style={styles.logoutBtn}
+          />
+
           <FlatList
             data={userPosts}
             keyExtractor={(item, indx) => indx.toString()}
@@ -51,27 +60,20 @@ const ProfileScreen = () => {
               <View>
                 <Image source={{ uri: item.photo }} style={styles.postImage} />
 
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    width: 343,
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                  }}
-                >
+                <View style={styles.postBar}>
                   <Text style={styles.postTitle}>{item.comment}</Text>
-                  <EvilIcons
-                    name="location"
-                    size={24}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginLeft: "auto",
-                    }}
-                    color="black"
-                  />
+                  <View style={styles.locationBox}>
+                    <EvilIcons
+                      name="location"
+                      size={24}
+                      style={{
+                        width: 24,
+                        height: 24,
+                      }}
+                      color="black"
+                    />
+                    <Text>WTF</Text>
+                  </View>
                 </View>
               </View>
             )}
@@ -86,16 +88,20 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
-    justifyContent: "flex-end",
     backgroundColor: "#fff",
   },
   imege: {
     flex: 1,
-    justifyContent: "center",
     resizeMode: "cover",
-    paddingTop: 30,
+    paddingTop: 147,
+  },
+  postsContainer: {
+    backgroundColor: "#fff",
+    // paddingLeft: 25,
+    // paddingRight: 25,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    position: "relative",
   },
   postImage: {
     width: 343,
@@ -106,14 +112,39 @@ const styles = StyleSheet.create({
     marginRight: "auto",
   },
   postTitle: {
-    // width: 343,
-    marginLeft: "auto",
-    marginRight: "auto",
     fontFamily: "Roboto",
     fontWeight: "bold",
     fontSize: 16,
     color: "#212121",
-    // backgroundColor: "blue",
+  },
+  userNickname: {
+    textAlign: "center",
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#212121",
+    marginTop: 20,
+    marginBottom: 30,
+  },
+  logoutBtn: {
+    position: "absolute",
+    top: 15,
+    right: 20,
+  },
+  postBar: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 20,
+    marginTop: 5,
+    width: 340,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  locationBox: {
+    display: "flex",
+    flexDirection: "row",
+    marginLeft: "auto",
   },
 });
 
